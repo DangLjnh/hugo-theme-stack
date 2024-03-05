@@ -1,0 +1,72 @@
+{{- $context := .Context -}}
+{{- $limit := default 10 .Params.limit -}}
+{{- $show := default 10 .Params.show -}}
+{{ $showWidget := false }}
+
+{{ $nameSection := "post" }}
+{{ with $context.Page.Path }}
+    {{ if ne . "_index.md" }}
+        {{ $nameSection = . | lower }}
+    {{ end }}
+{{ end }}
+
+{{ range $show }}
+    {{ $namePage := . }}
+    {{ if eq $nameSection $namePage }}
+        {{ $showWidget = true }}
+    {{ end }}
+{{ end }}
+
+{{ if $showWidget }}
+<section class="widget tagCloud">
+    <!-- <div class="widget-icon">
+        {{ partial "helper/icon" "categories" }}
+    </div> -->
+    <h2 class="widget-title section-title">{{ T "widget.featureCloud.title" }}</h2>
+    <div class="feature-post-wrapper">
+        {{ range $context.Site.RegularPages }}
+            {{ if eq .Params.feature true }}
+            <div class="feature-post">
+                {{- $image := partialCached "helper/image" (dict "Context" . "Type" "article") .RelPermalink "article" -}}
+                {{ if $image.exists }}
+                    <div class="article-image">
+                        <a href="{{ .RelPermalink }}">
+                            {{ if $image.resource }}
+                                {{- $Permalink := $image.resource.RelPermalink -}}
+                                {{- $Width := $image -}}
+                                {{- $Height := $image.resource.Height -}}
+                                {{- $Srcset := "" -}}
+                                <img src="{{ $Permalink }}"
+                                    style="object-fit: cover; object-position: center; border-radius: 4px;"
+                                    {{ with $Srcset }}srcset="{{ . }}"{{ end }}
+                                    width="74px" 
+                                    height="54px" 
+                                    loading="lazy"
+                                    alt="Featured image of post {{ .Title }}" />
+                            {{ else }}
+                                <img src="{{ $image.permalink }}" loading="lazy" alt="Featured image of post {{ .Title }}" />
+                            {{ end }}
+                        </a>
+                    </div>
+                {{ end }}
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="{{ .RelPermalink }}">
+                        {{ if len .Title | gt 40 }} 
+                            {{ .Title }}
+                        {{ else }}
+                            {{ .Title | truncate 40 }}... 
+                        {{ end }}
+                    </a>
+                    <span class="article-time" style="align-items: center; gap: 5px;">
+                        {{ partial "helper/icon" "date" }}
+                        <time class="article-time--published">
+                            {{- .Date.Format (or .Site.Params.dateFormat.published "Jan 02, 2006") -}}
+                        </time>
+                    </span>
+                </div>
+            </div>
+            {{ end }}
+        {{ end }}
+    </div>
+</section>
+{{ end }}

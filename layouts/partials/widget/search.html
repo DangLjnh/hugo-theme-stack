@@ -1,0 +1,23 @@
+{{ $nameSection := "post" }}
+{{ with .Context.Page.LinkTitle }}
+    {{ if ne . "_index.md" }}
+      {{ $nameSection = . | lower }}
+    {{ end }}
+{{ end }}
+
+{{ $permalink := .Context.Page.Permalink }}
+
+{{ if in $permalink "/vi/" }}
+<form action="/vi/search/" class="search-form widget" {{ with .OutputFormats.Get "json" -}}data-json="{{ .Permalink }}" {{- end }}>
+{{ else }}
+<form action="/search/" class="search-form widget" {{ with .OutputFormats.Get "json" -}}data-json="{{ .Permalink }}" {{- end }}>
+{{ end }}
+    <p>
+        <label>{{ T "search.title" }}</label>
+        <input name="keyword" required placeholder="{{ T `search.placeholder` }}" />
+        <input type="hidden" name="page" value="{{ $nameSection }}" />
+        <button title="{{ T `search.title` }}">
+            {{ partial "helper/icon" "search" }}
+        </button>
+    </p>
+</form>

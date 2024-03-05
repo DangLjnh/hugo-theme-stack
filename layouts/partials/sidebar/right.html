@@ -1,0 +1,52 @@
+{{- $scope := default "homepage" .Scope -}}
+{{- $context := .Context -}}
+{{- $widgets := index .Context.Site.Params.widgets $scope -}}
+
+<!-- sort widget by type -->
+{{- $order := .Context.Site.Params.sidebar.right.sort -}}
+
+{{ with .Context.Site.Params.sidebar.right.width }}
+    {{ if ne . "unset" }}
+        <style>
+            @media (min-width: 1024px) {
+                .right-sidebar {
+                    width: {{ . }};
+                }
+            }
+        </style>
+    {{ end }}
+{{ end }}
+
+<aside class="sidebar right-sidebar sticky">
+    {{- range $o := $order -}}
+        {{- range $widget := $widgets -}}
+            {{- if eq $widget.type $o -}}
+                {{- if in $widget.type "related" -}}
+                    {{ partial (printf "widget/%s" "related") (dict "Context" $context "Params" $widget.params "Type" $widget.type) }}
+                {{- else -}}
+                    {{- if templates.Exists (printf "partials/widget/%s.html" $widget.type) -}}
+                        {{ partial (printf "widget/%s" $widget.type) (dict "Context" $context "Params" $widget.params) }}
+                    {{- else -}}
+                        {{ warnf "Widget %s not found" $widget.type }}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    <!-- {{- /* Handle the rest of the widget */ -}} -->
+
+    {{- range $widget := $widgets -}}
+        {{- if not (in $order $widget.type) -}}
+            {{- if in $widget.type "related" -}}
+                {{ partial (printf "widget/%s" "related") (dict "Context" $context "Params" $widget.params "Type" $widget.type) }}
+            {{- else -}}
+                {{- if templates.Exists (printf "partials/widget/%s.html" $widget.type) -}}
+                    {{ partial (printf "widget/%s" $widget.type) (dict "Context" $context "Params" $widget.params) }}
+                {{- else -}}
+                    {{ warnf "Widget %s not found" $widget.type }}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+</aside>

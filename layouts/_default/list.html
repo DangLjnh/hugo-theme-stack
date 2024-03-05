@@ -1,0 +1,47 @@
+{{ define "main" }}
+    {{ $pages := where .Site.RegularPages "Type" "in" .Page.Type }}
+    {{ $pages := where $pages "Params.archives" "!=" true }}
+    {{ $notHidden := where .Site.RegularPages "Params.hidden" "!=" true }}
+    {{ $filtered := ($pages | intersect $notHidden) }}
+    {{ $pag := .Paginate ($filtered) }}
+
+    {{ $url := .Permalink }}
+    {{ $u := urls.Parse $url }}
+    {{ $section := path.Base $u.Path }}
+    {{ $nameSection := "" }}
+
+    {{ if ne $section "/" }}
+        {{ $nameSection = title $section }}
+    {{ end }}
+
+    {{ $type := print "layout" $nameSection }}
+    {{ $layout := index .Site.Params $type }}
+
+    {{ if or (in $u.Path "categories") (in $u.Path "tags") }}
+        {{ partial "layout/grid-3" (dict "Context" .) }}
+    {{ else }}
+        {{ if in $u.Path "archives" }}
+            {{ $pages = where .Site.RegularPages "Params.archives" true }}
+        {{ end }}
+
+        {{ if eq $layout "layout-grid-3" }}
+            {{ partial "layout/grid-3" (dict "Context" . "Pages" $pages) }}
+        {{ else if eq $layout "layout-grid-4" }}
+            {{ partial "layout/grid-4" (dict "Context" . "Pages" $pages) }}
+        {{ else }}
+            {{ partial "layout/grid-1-2-list" (dict "Context" . "Pages" $pages "Layout" $layout "Pag" $pag) }}
+        {{ end }}
+    {{ end }}
+
+    {{- partial "partials/pagination.html" . -}}
+    {{- partial "partials/footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ $url := .Permalink }}
+    {{ $u := urls.Parse $url }}
+
+    {{ if not (or (in $u.Path "categories") (in $u.Path "tags")) }}
+        {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+    {{ end }}
+{{ end }}

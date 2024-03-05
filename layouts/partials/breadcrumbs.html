@@ -1,0 +1,28 @@
+<ul id="breadcrumbs">
+  {{ $title := .Title }}
+
+  {{- range .Ancestors.Reverse }}
+    {{ $url := .RelPermalink }}
+    <!-- hide page pages, posts, tags, categories -->
+    {{ if and (ne .Title "Posts") (ne .Title "Pages") (ne .Title "Tags") (ne .Title "Categories")}}
+      <!-- covert page home to icon -->
+      {{ if or (eq $url "/") (eq $url "/vi/")}}
+        <li><a href="/">
+          <div class="widget-icon">
+            {{ partial "helper/icon" "home" }}
+          </div>
+        </a></li>
+      {{ else }}
+        <li><a href="{{ $url }}">{{ .Title }}</a></li>
+      {{ end }}
+    {{ end }}
+
+    {{ if and (ne $title "Pages") (ne .Title "Pages") (ne .Title "Posts") (ne .Title "Tags") (ne .Title "Categories")}}
+      <li>/</li>
+    {{ end }}
+  {{- end }}
+
+  {{ if ne $title "Pages" }}
+    <li><a href="{{ .RelPermalink }}">{{ $title }}</a></li>
+  {{ end }}
+</ul>

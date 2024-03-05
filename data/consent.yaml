@@ -1,0 +1,5 @@
+items:
+  - title: Posthog Anaytics
+    code: posthog
+    is_functional: false
+    script_file: posthog.js

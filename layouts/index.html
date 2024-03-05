@@ -1,0 +1,49 @@
+{{ define "main" }}
+    {{ $mainSection := "post" }}
+    {{ $pages := where .Site.RegularPages "Type" "in" $mainSection }}
+    {{ $pages := where $pages "Params.archives" "!=" true }}
+    {{ $notHidden := where .Site.RegularPages "Params.hidden" "!=" true }}
+    {{ $filtered := ($pages | intersect $notHidden) }}
+    {{ $pag := .Paginate ($filtered) }}
+
+    {{ if eq .Site.Params.layoutHome "layout-grid-1" }}
+    <section class="article-grid-1">
+    {{ else if eq .Site.Params.layoutHome "layout-grid-2" }}
+    <section class="article-grid-2">
+    {{ else }}
+    <section class="article-list">
+    {{ end }}
+
+    {{ if $pag }}
+        {{ $sortedPages := sort $pag.Pages "Date" "desc" }}
+        {{ $featuredPosts := slice }}
+        {{ $nonFeaturedPosts := slice }}
+        {{ range $sortedPages }}
+            {{ if eq .Params.feature true }}
+                {{ $featuredPosts = $featuredPosts | append . }}
+            {{ else }}
+                {{ $nonFeaturedPosts = $nonFeaturedPosts | append . }}
+            {{ end }}
+        {{ end }}
+        
+        {{ $sortedFeaturedPosts := sort $featuredPosts "Date" "desc" }}
+        {{ $sortedNonFeaturedPosts := sort $nonFeaturedPosts "Date" "desc" }}
+        
+        {{ range $sortedFeaturedPosts }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+        
+        {{ range $sortedNonFeaturedPosts }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    {{ end }}
+
+    </section>
+    
+    {{- partial "partials/pagination.html" . -}}
+    {{- partial "partials/footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}

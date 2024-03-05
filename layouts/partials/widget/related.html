@@ -1,0 +1,54 @@
+{{- $context := .Context -}}
+{{- $type := .Type -}}
+{{- $limit := default 5 .Params.limit -}}
+{{- $show := default 5 .Params.show -}}
+{{ $showWidget := false }}
+{{ $blogPages := where $context.Site.RegularPages "Section" "blogs" }}
+
+{{ $section := "post" }}
+{{ $nameCurrentPage := "post" }}
+{{ with $context.Page.Path }}
+    {{ if ne . "_index.md" }}
+        {{ $nameCurrentPage = . | lower }}
+    {{ end }}
+{{ end }}
+
+{{ if gt (len $blogPages) 0 }}
+    {{ $showWidget = true }}
+{{ else }}
+    {{ $showWidget = false }}
+{{ end }}
+
+{{ range $show }}
+    {{ $namePage := . }}
+    {{ if eq $nameCurrentPage $namePage }}
+        {{ $showWidget = true }}
+        {{ $section = index (split $type "-") 1 }}
+    {{ else }}
+        {{ $showWidget = false }}
+    {{ end }}
+{{ end }}
+
+{{ if $showWidget }}
+<section class="widget tagCloud">
+    {{ $title := printf "widget.related%s.title" (humanize $section) }}
+    <h2 class="widget-title section-title">{{ T $title }}</h2>
+    <div class="tagCloud-tags">
+        {{ $count := 0 }}
+        {{ range $context.Site.RegularPages }}
+            {{ if eq .Section $section }}
+                {{ if lt $count $limit }}
+                    <a href="{{ .RelPermalink }}">
+                        {{ if len .Title | gt 40 }} 
+                            {{ .Title }}
+                        {{ else }}
+                            {{ .Title | truncate 40 }}... 
+                        {{ end }}
+                    </a>
+                    {{ $count = add $count 1 }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    </div>
+</section>
+{{ end }}

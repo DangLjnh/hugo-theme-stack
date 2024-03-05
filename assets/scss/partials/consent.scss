@@ -1,0 +1,185 @@
+$button-color: rgba(0,0,0,0.6);
+$text-color-light: rgba(255, 255, 255, 0.7);
+$hover-color: white;
+$consent-notice-bg: #222;
+$consent-notice-color: rgba(255,255,255,0.8);
+$text-decoration-color: rgba(255,255,255,0.5);
+$deny-approve-consent-bg: #f0f0f0;
+$consent-overlay-bg: rgba(0,0,0,0.75);
+$consent-wrapper-bg: white;
+$save-consent-color: rgba(255, 255, 255, 0.7);
+
+button.btn {
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  padding: 0.7rem 1.4rem;
+  border: 0;
+  cursor: pointer;
+}
+
+#consent-notice {
+  padding: 1.6rem;
+  display: none;
+  text-align: center;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  width: 100%;
+  background: $consent-notice-bg;
+  color: $consent-notice-color;
+
+  span {
+    margin-right: 1rem;
+    font-size: medium;
+  }
+
+  button {
+    cursor: pointer;
+    display: inline-block;
+    width: auto;
+
+    &.btn {
+      margin-left: 0.5rem;
+    }
+  }
+
+  span a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: $text-decoration-color;
+  }
+
+  .wrapper-btn-consent {
+    display:flex;
+    gap: 3px;
+  }
+
+  button.btn {
+    &.manage-consent {
+      background: rgba(255,255,255,0.1);
+      font-weight: normal;
+      color: $text-color-light;
+      margin-right: 10px;
+    }
+
+    &.deny-consent {
+      background-color: $deny-approve-consent-bg;
+    }
+
+    &.approve-consent {
+      background-color: $deny-approve-consent-bg;
+    }
+  }
+}
+
+#consent-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  background: $consent-overlay-bg;
+  z-index: 999999;
+  overflow: auto;
+  cursor: pointer;
+  &.active {
+    display: flex;
+  }
+
+  .consent-wrapper {
+    background: white;
+    width: 100%;
+    max-width: 60rem;
+    padding: 3.5rem;
+    margin: auto;
+    cursor: initial;
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+    gap: 15px;
+    color: #666;
+
+    .consent-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+
+    p {
+      margin: 5px 0;
+      line-height: 2.3rem;
+    }
+
+    h3 {
+      padding-top: 0;
+      margin: unset;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    input {
+      margin-top: 0.3rem;
+    }
+
+    label {
+      display: block;
+    }
+
+    .btn {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .consent-save-wrapper {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+
+    button.btn {
+      flex: 1;
+      padding: 0.9rem 1.8rem;
+
+      &.save-consent {
+        background: $button-color;
+        color: $save-consent-color;
+        font-weight: normal;
+      }
+
+      &.approve-consent {
+      }
+      
+      &.cancel-consent {
+        background: $button-color;
+        color: $save-consent-color;
+        font-weight: normal;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    > div {
+      padding: 1.75rem 1rem;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  #consent-notice {
+    span {
+      display: block;
+      padding-top: 3px;
+      margin-bottom: 1.5rem;
+    }
+
+    button.btn {
+      position: relative;
+      bottom: 4px;
+    }
+  }
+}

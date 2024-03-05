@@ -1,0 +1,96 @@
+toggleMenu:
+    other: Toggle Menu
+
+darkMode:
+    other: Dark Mode
+
+list:
+    page:
+        one: "{{ .Count }} page"
+        other: "{{ .Count }} pages"
+
+    section:
+        other: Section
+
+    subsection:
+        one: Subsection
+        other: Subsections
+
+article:
+    back:
+        other: Back
+
+    tableOfContents:
+        other: Table of contents
+
+    relatedContent:
+        other: Related content
+
+    lastUpdatedOn:
+        other: Last updated on
+
+    readingTime:
+        one: "{{ .Count }} minute read"
+        other: "{{ .Count }} minute read"
+
+notFound:
+    title:
+        other: Not Found
+
+    subtitle:
+        other: This page does not exist
+
+widget:
+    archives:
+        title:
+            other: Archives
+
+        more:
+            other: More
+
+    tagCloud:
+        title:
+            other: Tags
+    categoriesCloud:
+        title:
+            other: Categories
+    featureCloud:
+        title:
+            other: Feature Post
+    relatedApps:
+        title:
+            other: Related Apps
+    relatedServices:
+        title:
+            other: Related Services
+    relatedBlogs:
+        title:
+            other: Related Blog
+    relatedPost:
+        title:
+            other: Related Home
+
+search:
+    title:
+        other: Search
+
+    placeholder:
+        other: Type something...
+
+    resultTitle:
+        other: "#PAGES_COUNT pages (#TIME_SECONDS seconds)"
+
+footer:
+    builtWith:
+        other: Built with {{ .Generator }}
+
+    designedBy:
+        other: Theme {{ .Theme }} designed by {{ .DesignedBy }}
+
+consent:
+    title: We would like to use third party code to improve the functionality of this website.
+    manageReferences: Manage references
+    deny: Deny
+    allow: Allow
+    posthogTitle: Posthog Anaytics
+    posthogDescription: This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.

@@ -1,0 +1,37 @@
+{{ $layout := .Layout }}
+{{ $pag  := .Pag}}
+
+{{ if eq $layout "layout-grid-1" }}
+<section class="article-grid-1">
+{{ else if eq $layout "layout-grid-2" }}
+<section class="article-grid-2">
+{{ else if eq $layout "layout-list" }}
+<section class="article-list">
+{{else}}
+<section class="article-grid-1">
+{{ end }}
+
+{{ if $pag }}
+    {{ $sortedPages := sort $pag.Pages "Date" "desc" }}
+    {{ $featuredPosts := slice }}
+    {{ $nonFeaturedPosts := slice }}
+    {{ range $sortedPages }}
+        {{ if eq .Params.feature true }}
+            {{ $featuredPosts = $featuredPosts | append . }}
+        {{ else }}
+            {{ $nonFeaturedPosts = $nonFeaturedPosts | append . }}
+        {{ end }}
+    {{ end }}
+    
+    {{ $sortedFeaturedPosts := sort $featuredPosts "Date" "desc" }}
+    {{ $sortedNonFeaturedPosts := sort $nonFeaturedPosts "Date" "desc" }}
+    
+    {{ range $sortedFeaturedPosts }}
+        {{ partial "article-list/default" . }}
+    {{ end }}
+    
+    {{ range $sortedNonFeaturedPosts }}
+        {{ partial "article-list/default" . }}
+    {{ end }}
+{{ end }}
+</section>

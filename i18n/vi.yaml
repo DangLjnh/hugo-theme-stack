@@ -1,0 +1,101 @@
+toggleMenu:
+  other: Hiển thị Menu
+
+darkMode:
+  other: Chế độ nền tối
+
+list:
+  page:
+    one: "{{ .Count }} trang"
+    other: "{{ .Count }} trang"
+
+  section:
+    other: Section
+
+  subsection:
+    one: Subsection
+    other: Subsections
+
+article:
+  back:
+    other: Trở lại
+
+  tableOfContents:
+    other: Mục lục
+
+  relatedContent:
+    other: Bài viết liên quan
+
+  lastUpdatedOn:
+    other: Cập nhật lần cuối
+
+  readingTime:
+    one: "{{ .Count }} phút đọc"
+    other: "{{ .Count }} phút đọc"
+
+notFound:
+  title:
+    other: Không tìm thấy
+
+  subtitle:
+    other: Trang này không tồn tại
+
+widget:
+  archives:
+    title:
+      other: Lưu trữ
+
+    more:
+      other: Còn nữa
+
+  tagCloud:
+    title:
+      other: Nhãn dán
+
+  categoriesCloud:
+    title:
+      other: Chuỗi bài
+
+  relatedApps:
+        title:
+            other: Bài viết liên quan trang Apps 
+  
+  relatedPost:
+      title:
+          other: Bài viết liên quan trang chủ
+
+  relatedServices:
+      title:
+          other: Bài viết liên quan trang Services
+  relatedBlogs:
+      title:
+          other: Bài viết liên quan trang Blog
+
+  featureCloud:
+    title:
+        other: Bài viết nổi bật
+
+search:
+  title:
+    other: Tìm kiếm
+
+  placeholder:
+    other: Nhập từ khoá ...
+
+  resultTitle:
+    other: "#PAGES_COUNT trang (#TIME_SECONDS giây)"
+
+footer:
+  builtWith:
+    other: Built with {{ .Generator }}
+
+  designedBy:
+    other: Theme {{ .Theme }} thiết kế bởi {{ .DesignedBy }}
+
+consent:
+  title: Chúng tôi muốn sử dụng mã nguồn của bên thứ ba để cải thiện chức năng của trang web này.
+  manageReferences: Quản lý tham chiếu
+  deny: Từ chối
+  allow: Cho phép
+  posthogTitle: Phân tích Posthog
+  posthogDescription: Mã này cho chúng tôi cái nhìn về số lượng người truy cập trang web của chúng tôi, họ đến từ đâu và họ đang nhấp vào điều gì.

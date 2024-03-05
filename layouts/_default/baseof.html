@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" dir="{{ default `ltr` .Language.LanguageDirection }}">
+    <head>
+        {{- partial "head/head.html" . -}}
+        {{ if or (eq .Page.Title "Search") (in .Page.Title "Search") }}
+            {{- block "head-search" . -}}{{ end }}
+        {{ else }}
+            {{- block "head" . -}}{{ end }}
+        {{ end }}
+    </head>
+    {{ if or (eq .Page.Title "Search") (in .Page.Title "Search") }}
+        <body class="{{ block `body-class-search` . }}{{ end }}">
+    {{ else }}
+        <body class="{{ block `body-class` . }}{{ end }}">
+    {{ end }}
+        {{- partial "head/colorScheme" . -}}
+
+        {{/* The container is wider when there's any activated widget */}}
+        {{- $hasWidget := false -}}
+        {{- range .Site.Params.widgets -}}
+            {{- if gt (len .) 0 -}}
+                {{- $hasWidget = true -}}
+            {{- end -}}
+        {{- end -}}
+        <div class="container main-container flex on-phone--column {{ if $hasWidget }}extended{{ else }}compact{{ end }}">
+            {{- block "left-sidebar" . -}}
+                {{ partial "sidebar/left.html" . }}
+            {{- end -}}
+            {{- block "right-sidebar" . -}}{{ end }}
+            <main class="main full-width">
+                {{- partial "partials/breadcrumbs.html" . -}}
+                {{ if or (eq .Page.Title "Search") (in .Page.Title "Search") }}
+                    {{- block "main-search" . }}{{- end }}
+                {{ else }}
+                    {{- block "main" . }}{{- end }}
+                {{ end }}
+            </main>
+        </div>
+        {{ partial "footer/include.html" . }}
+        {{- partial "partials/consent.html" . -}}
+    </body>
+</html>

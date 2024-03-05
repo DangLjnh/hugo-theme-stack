@@ -1,0 +1,128 @@
+{{- $context := .Context -}}
+{{- $limit := default 10 .Params.limit -}}
+{{ $renderedCategories := slice }}
+{{ $showWidget := false }}
+{{ $countCategory := 0 }}
+{{ $url := $context.Permalink }}
+{{ $u := urls.Parse $url }}
+
+{{ $nameSection := "post" }}
+{{ with $context.Page.Path }}
+    {{ if ne . "_index.md" }}
+        {{ $nameSection = . | lower }}
+    {{ end }}
+{{ end }}
+
+{{ $pages := slice }}
+{{ if in $u.Path "archives" }}
+    {{ $pages = where $context.Site.RegularPages "Params.archives" "==" true }}
+{{ else }}
+    {{ $pages = where $context.Site.RegularPages "Params.archives" "!=" (default false .Params.archives) }}
+{{ end }}
+
+<!-- check already have category in page -->
+{{ range $pages }}
+    {{ $namePost := .Title }}
+    {{ if in $u.Path "archives" }}
+        {{ range $context.Site.Taxonomies.categories.ByCount }}
+            {{ $category := .Page.Title | lower }}
+            {{ $words := split $category " " }}
+            {{ if gt (len $words) 1 }}
+                {{ $category = replace $category " " "-" }}
+            {{ end }}
+            {{ $categoryPages := index $context.Site.Taxonomies.categories $category }}
+            {{ range $categoryPages }}
+                {{ $titlePage := .Page.Title }}
+                {{ if eq $titlePage $namePost }}
+                    {{ $showWidget = true }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    {{ else }}
+        {{ if eq .Section $nameSection }}
+            {{ range $context.Site.Taxonomies.categories.ByCount }}
+                {{ $category := .Page.Title | lower }}
+                {{ $words := split $category " " }}
+                {{ if gt (len $words) 1 }}
+                    {{ $category = replace $category " " "-" }}
+                {{ end }}
+                {{ $categoryPages := index $context.Site.Taxonomies.categories $category }}
+                {{ range $categoryPages }}
+                    {{ $titlePage := .Page.Title }}
+                    {{ if eq $titlePage $namePost }}
+                        {{ $showWidget = true }}
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ if $showWidget }}
+    <section class="widget tagCloud">
+        <div class="widget-title-wrapper">
+            <div class="widget-icon">
+                {{ partial "helper/icon" "categories" }}
+            </div>
+            <h2 class="widget-title section-title">{{ T "widget.categoriesCloud.title" }}</h2>
+        </div>
+        <div class="tagCloud-tags">
+            {{ range $pages }}
+                {{ $namePost := .Title }}
+                {{ if in $u.Path "archives" }}
+                {{ range $context.Site.Taxonomies.categories.ByCount }}
+                    {{ $category := .Page.Title | lower }}
+                    {{ $words := split $category " " }}
+                    {{ if gt (len $words) 1 }}
+                    {{ $category = replace $category " " "-" }}
+                    {{ end }}
+                    {{ $categoryOriginal := .Page.Title }}
+                    {{ $categoryLink := .Page.RelPermalink }}
+                    {{ $count := .Count }}  
+                    {{ $categoryPages := index $context.Site.Taxonomies.categories $category }}
+                    {{ range $categoryPages }}
+                        {{ $titlePage := .Page.Title }}
+                        {{ if and (eq $titlePage $namePost) (not (in $renderedCategories $categoryOriginal))}}
+                        {{ if lt $countCategory $limit }}
+                            <a href="{{ $categoryLink }}" class="font_size_{{ $count }}">
+                            {{ $categoryOriginal }}
+                            </a>
+                            {{ $renderedCategories = $renderedCategories | append $categoryOriginal }}
+                            {{ $countCategory = add $countCategory 1 }}
+                        {{ end }}
+                        {{ end }}
+                    {{ end }}
+                {{ end }}
+
+                {{ else }}
+                
+                    {{ if eq .Section $nameSection }}
+                        {{ range $context.Site.Taxonomies.categories.ByCount }}
+                            {{ $category := .Page.Title | lower }}
+                            {{ $words := split $category " " }}
+                            {{ if gt (len $words) 1 }}
+                            {{ $category = replace $category " " "-" }}
+                            {{ end }}
+                            {{ $categoryOriginal := .Page.Title }}
+                            {{ $categoryLink := .Page.RelPermalink }}
+                            {{ $count := .Count }}  
+                            {{ $categoryPages := index $context.Site.Taxonomies.categories $category }}
+                            {{ range $categoryPages }}
+                                {{ $titlePage := .Page.Title }}
+                                {{ if and (eq $titlePage $namePost) (not (in $renderedCategories $categoryOriginal))}}
+                                {{ if lt $countCategory $limit }}
+                                    <a href="{{ $categoryLink }}" class="font_size_{{ $count }}">
+                                    {{ $categoryOriginal }}
+                                    </a>
+                                    {{ $renderedCategories = $renderedCategories | append $categoryOriginal }}
+                                    {{ $countCategory = add $countCategory 1 }}
+                                {{ end }}
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+        </div>
+    </section>
+{{ end }}
