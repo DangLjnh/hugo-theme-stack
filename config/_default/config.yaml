@@ -1,0 +1,286 @@
+enableRobotsTXT: true
+baseurl: https://rtworkspace.com
+resourceDir: resources/rtworkspace.com
+languageCode: en-us
+theme: hugo-theme-stack
+paginate: 10
+title: rtWork
+copyright: RealTimeX
+timeout: 10m
+
+languages:
+    en:
+        languageName: English
+        title: rtWork
+        weight: 1
+        params:
+            description: All-in-One Workspace
+    vi:
+        languageName: Tiếng Việt
+        title: rtWork
+        weight: 2
+        params:
+            description: Workspace tất cả trong một
+
+# Change it to your Disqus shortname before using
+disqusShortname: hugo-theme-stack
+
+# GA Tracking ID
+googleAnalytics:
+
+# Theme i18n support
+# Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
+DefaultContentLanguage: en
+
+# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
+# This will make .Summary and .WordCount behave correctly for CJK languages.
+hasCJKLanguage: false
+
+permalinks:
+    post: /p/:slug/
+    page: /:slug/
+
+params:
+    mainSections:
+        - post
+    featuredImageField: image
+    rssFullContent: true
+    favicon: /avatar.png # e.g.: favicon placed in `static/favicon.ico` of your site folder, then set this field to `/favicon.ico` (`/` is necessary)
+
+    # Set layout for page
+    layoutApps: 'layout-grid-1'
+    layoutHome: 'layout-grid-2'
+    layoutBlogs: 'layout-list'
+    layoutArchives: 'layout-grid-4'
+
+    footer:
+        since: 2013
+        customText: "Email: info@rta.vn | Tel: 028.6684.6530. Address: Suite B2.905, 59 Ngo Tat To, Binh Thanh District, Ho Chi Minh City, Viet Nam.
+Taxcode: 0312166120, issue by Dept of Planning & Investment on 27/02/2013.
+Using this website means that you agree with our Terms of Service and Privacy Policy."
+
+    dateFormat:
+        published: Jan 02, 2006
+        lastUpdated: Jan 02, 2006 15:04 MST
+
+    sidebar:
+        emoji: 🥇
+        subtitle: All-in-One Workspace.
+        avatar:
+            enabled: true
+            local: true
+            src: img/avatar.png
+        right: 
+            # sort by type widgets
+            sort: ["search", "tag-cloud", "categories", "feature-post"]
+            width: "unset"
+        left:
+            # max width can set sidebar left is 222px
+            width: "unset"
+
+    article:
+        math: false
+        toc: true
+        readingTime: false
+        license:
+            enabled: true
+            default: RealTimeX
+
+    comments:
+        enabled: true
+        provider: disqus
+
+        disqusjs:
+            shortname:
+            apiUrl:
+            apiKey:
+            admin:
+            adminLabel:
+
+        utterances:
+            repo:
+            issueTerm: pathname
+            label:
+
+        remark42:
+            host:
+            site:
+            locale:
+
+        vssue:
+            platform:
+            owner:
+            repo:
+            clientId:
+            clientSecret:
+            autoCreateIssue: false
+
+        # Waline client configuration see: https://waline.js.org/en/reference/component.html
+        waline:
+            serverURL:
+            lang:
+            pageview:
+            emoji:
+                - https://unpkg.com/@waline/emojis@1.0.1/weibo
+            requiredMeta:
+                - name
+                - email
+                - url
+            locale:
+                admin: Admin
+                placeholder:
+
+        twikoo:
+            envId:
+            region:
+            path:
+            lang:
+
+        # See https://cactus.chat/docs/reference/web-client/#configuration for description of the various options
+        cactus:
+            defaultHomeserverUrl: "https://matrix.cactus.chat:8448"
+            serverName: "cactus.chat"
+            siteName: "" # You must insert a unique identifier here matching the one you registered (See https://cactus.chat/docs/getting-started/quick-start/#register-your-site)
+
+        giscus:
+            repo:
+            repoID:
+            category:
+            categoryID:
+            mapping:
+            lightTheme:
+            darkTheme:
+            reactionsEnabled: 1
+            emitMetadata: 0
+
+        gitalk:
+            owner:
+            admin:
+            repo:
+            clientID:
+            clientSecret:
+
+        cusdis:
+            host:
+            id:
+    widgets:
+        homepage:
+            - type: search
+              params:
+                  limit: 5
+            - type: categories
+              params:
+                  limit: 10
+            - type: related-apps
+              params:
+                  limit: 5
+                  show: ["post"]
+            - type: related-post
+              params:
+                  limit: 5
+                  show: ["apps"]
+            - type: related-blogs
+              params:
+                  limit: 5
+                  show: ["apps"]
+            - type: feature-post
+              params:
+                  limit: 10
+                  show: ["apps", "post", "blogs"]
+            - type: tag-cloud
+              params:
+                  limit: 10
+        page:
+            - type: toc
+    opengraph:
+        twitter:
+            # Your Twitter username
+            site:
+
+            # Available values: summary, summary_large_image
+            card: summary_large_image
+
+    defaultImage:
+        opengraph:
+            enabled: false
+            local: false
+            src:
+
+    colorScheme:
+        # Display toggle
+        toggle: true
+
+        # Available values: auto, light, dark
+        default: auto
+
+    imageProcessing:
+        cover:
+            enabled: true
+        content:
+            enabled: true
+
+### Custom menu
+### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
+### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
+menu:
+
+    social:
+        - identifier: 1_facebook
+          name: Facebook
+          url: https://facebook.com/rtWorkspace
+          params:
+              icon: brand-facebook
+
+        - identifier: 2_linkedin
+          name: LinkedIn
+          url: https://www.linkedin.com/company/real-time-analytics
+          params:
+              icon: brand-linkedin
+
+        - identifier: 3_twitter
+          name: Twitter
+          url: https://twitter.com
+          params:
+              icon: brand-twitter
+
+        - identifier: 4_apple
+          name: App Store
+          url: https://apps.apple.com/vn/app/rtwork/id1097767529?l=vi
+          params:
+              icon: brand-appstore
+
+        - identifier: 5_playstore
+          name: Play Store
+          url: https://play.google.com/store/apps/details?id=vn.rta.rtwork&hl=vi&gl=US
+          params:
+              icon: brand-android
+              
+
+related:
+    includeNewer: true
+    threshold: 60
+    toLower: false
+    indices:
+        - name: tags
+          weight: 100
+
+        - name: categories
+          weight: 200
+
+markup:
+    goldmark:
+        renderer:
+            ## Set to true if you have HTML content inside Markdown
+            unsafe: true
+    tableOfContents:
+        endLevel: 4
+        ordered: true
+        startLevel: 2
+    highlight:
+        noClasses: false
+        codeFences: true
+        guessSyntax: true
+        lineNoStart: 1
+        lineNos: true
+        lineNumbersInTable: true
+        tabWidth: 4

@@ -1,0 +1,4 @@
+baseurl: https://beta.rtworkspace.com
+defaultContentLanguage: en
+publishDir: public/beta.rtworkspace.com
+resourceDir: resources/beta.rtworkspace.com
